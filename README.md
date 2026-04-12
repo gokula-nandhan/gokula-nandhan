@@ -1,4 +1,4 @@
-![](images/github-readme.png)
+![](images/image.png)
 
 #### 🎓 I'm a Second-year Software Engineering student at the Informatics Institute of Technology (IIT), affiliated with the University of Westminster, UK.
 #### 💡 I have a solid foundation in software development principles and object-oriented programming.
