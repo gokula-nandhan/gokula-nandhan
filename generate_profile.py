@@ -2,9 +2,6 @@ import os
 import datetime
 import requests
 
-def xml_escape(text):
-    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
 def fetch_github_stats(username="gokula-nandhan"):
     print(f"Fetching GitHub stats for {username}...")
     headers = {
@@ -106,17 +103,6 @@ def fetch_github_stats(username="gokula-nandhan"):
     }
 
 def generate_svgs():
-    portrait_path = "portrait.txt"
-    if not os.path.exists(portrait_path):
-        print(f"Error: {portrait_path} not found. Running photo_to_ascii.py first.")
-        import photo_to_ascii
-        photo_to_ascii.image_to_ascii("images/avatar.png", portrait_path)
-        
-    with open(portrait_path, "r", encoding="utf-8") as f:
-        ascii_lines = f.readlines()
-        
-    ascii_escaped = [xml_escape(line.rstrip('\r\n')) for line in ascii_lines]
-    
     # Fetch live GitHub metrics
     stats = fetch_github_stats("gokula-nandhan")
     
@@ -145,7 +131,7 @@ def generate_svgs():
       .link {{ fill: #58a6ff; }}
       .add {{ fill: #3fb950; }}
       .del {{ fill: #ff7b72; }}
-      .ascii {{ fill: #8be9fd; font-size: 11.5px; letter-spacing: 0.5px; }}
+      .ascii {{ fill: #7dd3fc; font-size: 11.5px; letter-spacing: 0.5px; }}
       .cursor {{ fill: #58a6ff; animation: blink 1s step-end infinite; }}
       @keyframes blink {{
         50% {{ fill: transparent; }}
@@ -176,18 +162,6 @@ def generate_svgs():
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
       <tspan class="command">neofetch --profile</tspan>
-    </text>
-
-    <!-- ASCII Portrait -->
-    <text x="35" y="125" class="ascii">"""
-    
-    for i, line in enumerate(ascii_escaped):
-        if i == 0:
-            dark_svg += f"\n      <tspan>{line}</tspan>"
-        else:
-            dark_svg += f"\n      <tspan x=\"35\" dy=\"15\">{line}</tspan>"
-            
-    dark_svg += f"""
     </text>
 
     <!-- Right Side Information -->
@@ -256,7 +230,7 @@ def generate_svgs():
       .link {{ fill: #0969da; }}
       .add {{ fill: #1a7f37; }}
       .del {{ fill: #cf222e; }}
-      .ascii {{ fill: #0969da; font-size: 11.5px; letter-spacing: 0.5px; }}
+      .ascii {{ fill: #7dd3fc; font-size: 11.5px; letter-spacing: 0.5px; }}
       .cursor {{ fill: #0969da; animation: blink 1s step-end infinite; }}
       @keyframes blink {{
         50% {{ fill: transparent; }}
@@ -287,18 +261,6 @@ def generate_svgs():
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
       <tspan class="command">neofetch --profile</tspan>
-    </text>
-
-    <!-- ASCII Portrait -->
-    <text x="35" y="125" class="ascii">"""
-    
-    for i, line in enumerate(ascii_escaped):
-        if i == 0:
-            light_svg += f"\n      <tspan>{line}</tspan>"
-        else:
-            light_svg += f"\n      <tspan x=\"35\" dy=\"15\">{line}</tspan>"
-            
-    light_svg += f"""
     </text>
 
     <!-- Right Side Information -->

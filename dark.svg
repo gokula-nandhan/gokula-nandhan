@@ -11,14 +11,14 @@
       .prompt { fill: #58a6ff; }
       .path { fill: #ffb86c; }
       .command { fill: #c9d1d9; }
-      .name { fill: #58a6ff; font-size: 18px; font-weight: bold; }
+      .name { fill: #34d399; font-size: 18px; font-weight: bold; }
       .key { fill: #ffb86c; }
       .section { fill: #bc8cff; font-weight: bold; }
       .value { fill: #c9d1d9; }
       .link { fill: #58a6ff; }
       .add { fill: #3fb950; }
       .del { fill: #ff7b72; }
-      .ascii { fill: #8be9fd; font-size: 11.5px; letter-spacing: 0.5px; }
+      .ascii { fill: #7dd3fc; font-size: 11.5px; letter-spacing: 0.5px; }
       .cursor { fill: #58a6ff; animation: blink 1s step-end infinite; }
       @keyframes blink {
         50% { fill: transparent; }
@@ -51,33 +51,6 @@
       <tspan class="command">neofetch --profile</tspan>
     </text>
 
-    <!-- ASCII Portrait -->
-    <text x="35" y="125" class="ascii">
-      <tspan>                 .....              </tspan>
-      <tspan x="35" dy="15">                .      .            </tspan>
-      <tspan x="35" dy="15">                  :i;,              </tspan>
-      <tspan x="35" dy="15">              ..;0@@@@G,..          </tspan>
-      <tspan x="35" dy="15">              . L@0Lf10i .          </tspan>
-      <tspan x="35" dy="15">              . 1@8LCfi; .          </tspan>
-      <tspan x="35" dy="15">              ..18@C1i;:...         </tspan>
-      <tspan x="35" dy="15">            .    ;@0f1i     ..      </tspan>
-      <tspan x="35" dy="15">           . .,;1f@@Lff;i,,         </tspan>
-      <tspan x="35" dy="15">  ......... ;CG8@0@@0@f1LLLt;.      </tspan>
-      <tspan x="35" dy="15">           t0GCG0GLG8GLfLCCLfi.     </tspan>
-      <tspan x="35" dy="15"> .11iii;;:f0G0LGCCGGLLfLLL0Gf1: .   </tspan>
-      <tspan x="35" dy="15">..8@@@@@@@@@@@@@@80CfLLLfC8Gft;..   </tspan>
-      <tspan x="35" dy="15">. f@@@@@@@@@@@@@@@@LLGCCLG@0C1i, .  </tspan>
-      <tspan x="35" dy="15">. ;@@@@@@@@@@@@@@@@GCG0GG8880L1; .  </tspan>
-      <tspan x="35" dy="15">ttf@@@@@@@@@@@@@@@@GCCG888fG8L1i... </tspan>
-      <tspan x="35" dy="15">LG8@@@@@@@@@@@@@@@@0080GGCti1it1.   </tspan>
-      <tspan x="35" dy="15">tLG0@@@@@@@@@@@@@@@@@8L1i;iCCLLf11, </tspan>
-      <tspan x="35" dy="15">fffC088888888@@@@@@@0LttttfCLLfft;. </tspan>
-      <tspan x="35" dy="15">tttCGCCCCCCCCLCCCCCCLLLLLLLLLL1;.   </tspan>
-      <tspan x="35" dy="15">tttLCCCCCCCLLLLLLLCLLLLfLLLLfif, .  </tspan>
-      <tspan x="35" dy="15">ttfLLLLLLffffLLLCCCLLLLLLLf1:t@;..  </tspan>
-      <tspan x="35" dy="15">ttfLCCCCLLLLLfLLLLLfffffft;,iL81 .  </tspan>
-    </text>
-
     <!-- Right Side Information -->
     <!-- Name -->
     <text x="385" y="125" class="name">gokula nandhan</text>
@@ -101,7 +74,7 @@
     <!-- GitHub Stats -->
     <text x="385" y="319" class="section">~/stats</text>
     <text x="385" y="335"><tspan class="key">Repos</tspan>           <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-    <text x="385" y="351"><tspan class="key">Commits</tspan>         <tspan class="value">314</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+    <text x="385" y="351"><tspan class="key">Commits</tspan>         <tspan class="value">315</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
     <text x="385" y="367"><tspan class="key">Line of Codes</tspan>   <tspan class="value">254,337 (</tspan><tspan class="add">267,053++</tspan><tspan class="value">, </tspan><tspan class="del">12,716--</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach -->
@@ -118,6 +91,10 @@
     </text>
     
     <!-- Date / Time -->
+<<<<<<< Updated upstream
     <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 10:59 IST</text>
+=======
+    <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 16:40 IST</text>
+>>>>>>> Stashed changes
   </g>
 </svg>
