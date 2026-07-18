@@ -11,7 +11,7 @@
       .prompt { fill: #0969da; }
       .path { fill: #bc4c00; }
       .command { fill: #24292f; }
-      .name { fill: #0ea5e9; font-size: 18px; font-weight: bold; }
+      .name { fill: #0969da; font-size: 18px; font-weight: bold; }
       .key { fill: #bc4c00; }
       .section { fill: #8250df; font-weight: bold; }
       .value { fill: #24292f; }
@@ -91,10 +91,6 @@
     </text>
     
     <!-- Date / Time -->
-<<<<<<< Updated upstream
-    <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 10:59 IST</text>
-=======
-    <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 16:40 IST</text>
->>>>>>> Stashed changes
+    <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 11:17 IST</text>
   </g>
 </svg>
