@@ -3,3 +3,4 @@
 	<source media="(prefers-color-scheme: light)" srcset="./light.svg">
 	<img src="./light.svg" alt="Profile SVG">
 </picture>
+ 
