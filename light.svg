@@ -97,16 +97,16 @@
       <text x="35" y="337"><tspan class="key">           </tspan>   <tspan class="value">Scikit-learn - BeautifulSoup - Selenium</tspan></text>
       <text x="35" y="353"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
       
-      <!-- GitHub Stats (Right Column) -->
-      <text x="560" y="215" class="section">~/stats</text>
-      <text x="560" y="231"><tspan class="key">Repos</tspan>           <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-      <text x="560" y="247"><tspan class="key">Commits</tspan>         <tspan class="value">319</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
-      <text x="560" y="263"><tspan class="key">Line of Codes</tspan>   <tspan class="value">254,510 (</tspan><tspan class="add">267,235++</tspan><tspan class="value">, </tspan><tspan class="del">12,725--</tspan><tspan class="value">)</tspan></text>
+      <!-- GitHub Stats (Left Column, below stack) -->
+      <text x="35" y="379" class="section">~/stats</text>
+      <text x="35" y="395"><tspan class="key">Repos</tspan>           <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
+      <text x="35" y="411"><tspan class="key">Commits</tspan>         <tspan class="value">320</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+      <text x="35" y="427"><tspan class="key">Line of Codes</tspan>   <tspan class="value">254,510 (</tspan><tspan class="add">267,235++</tspan><tspan class="value">, </tspan><tspan class="del">12,725--</tspan><tspan class="value">)</tspan></text>
       
-      <!-- Reach (Right Column) -->
-      <text x="560" y="289" class="section">~/reach</text>
-      <text x="560" y="305"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-      <text x="560" y="321"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+      <!-- Reach (Left Column, below stats) -->
+      <text x="35" y="453" class="section">~/reach</text>
+      <text x="35" y="469"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+      <text x="35" y="485"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
     </g>
     
     <!-- Footer / Prompt line -->
@@ -119,6 +119,6 @@
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 18 Jul 2026, 18:25 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 18 Jul 2026, 13:01 IST</text>
   </g>
 </svg>
