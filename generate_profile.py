@@ -2,6 +2,9 @@ import os
 import datetime
 import requests
 
+def xml_escape(text):
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
 def fetch_github_stats(username="gokula-nandhan"):
     print(f"Fetching GitHub stats for {username}...")
     headers = {
@@ -103,6 +106,43 @@ def fetch_github_stats(username="gokula-nandhan"):
     }
 
 def generate_svgs():
+    portrait_path = "portrait.txt"
+    if not os.path.exists(portrait_path):
+        print(f"Error: {portrait_path} not found. Running photo_to_ascii.py first.")
+        import photo_to_ascii
+        photo_to_ascii.image_to_ascii("images/avatar.png", portrait_path)
+        
+    with open(portrait_path, "r", encoding="utf-8") as f:
+        ascii_lines = f.readlines()
+        
+    ascii_escaped = [xml_escape(line.rstrip('\r\n')) for line in ascii_lines]
+    
+    # Form ASCII Portrait SVG span elements (retained for backward compat, not used in template)
+    ascii_portrait_svg = ""
+    for i, line in enumerate(ascii_escaped):
+        if i == 0:
+            ascii_portrait_svg += f'<tspan>{line}</tspan>'
+        else:
+            ascii_portrait_svg += f'\n      <tspan x="35" dy="15">{line}</tspan>'
+
+    # Escape and format the ASCII name "gokula nandhan"
+    ascii_name_lines = [
+        "               __              __                             __   __             ",
+        "   ____ _____ / /____  _______/ /___ _   ____  ____ _____  __/ /_ / /_  ____ _____ ",
+        "  / __ `/ __ \\/ //_/ / / / / / / __ `/  / __ \\/ __ `/ __ \\/ __  // __ \\/ __ `/ __ \\",
+        " / /_/ / /_/ / ,< / /_/ / /_/ / /_/ /  / / / / /_/ / / / / /_/ // / / / /_/ / / / /",
+        " \\__, /\\____/_/|_|\\__,_/\\__,_/\\__,_/  /_/ /_/\\__,_/_/ /_/\\__,_//_/ /_/\\__,_/_/ /_/ ",
+        "/____/"
+    ]
+    ascii_name_escaped = [xml_escape(line) for line in ascii_name_lines]
+    
+    ascii_name_svg = ""
+    for i, line in enumerate(ascii_name_escaped):
+        if i == 0:
+            ascii_name_svg += f'<tspan x="35" dy="0">{line}</tspan>'
+        else:
+            ascii_name_svg += f'\n      <tspan x="35" dy="10">{line}</tspan>'
+
     # Fetch live GitHub metrics
     stats = fetch_github_stats("gokula-nandhan")
     
@@ -111,7 +151,7 @@ def generate_svgs():
     date_str = now.strftime("%d %b %Y, %H:%M") + " IST"
     
     # Dark Mode SVG Template
-    dark_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 485" width="820" height="485">
+    dark_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 545" width="950" height="545">
   <defs>
     <style>
       .terminal {{
@@ -121,29 +161,74 @@ def generate_svgs():
       }}
       .bold {{ font-weight: bold; }}
       .title {{ fill: #8b949e; font-size: 13px; }}
-      .prompt {{ fill: #58a6ff; }}
-      .path {{ fill: #ffb86c; }}
+      .prompt {{ fill: #3fb950; }}
+      .path {{ fill: #58a6ff; }}
       .command {{ fill: #c9d1d9; }}
-      .name {{ fill: #58a6ff; font-size: 18px; font-weight: bold; }}
-      .key {{ fill: #ffb86c; }}
-      .section {{ fill: #bc8cff; font-weight: bold; }}
+      .ascii-name {{
+        fill: #58a6ff;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 7.8px;
+        font-weight: bold;
+        letter-spacing: 0;
+        word-spacing: 0;
+      }}
+      .key {{ fill: #00b4d8; }}
+      .section {{ fill: #8b949e; font-weight: bold; }}
       .value {{ fill: #c9d1d9; }}
       .link {{ fill: #58a6ff; }}
       .add {{ fill: #3fb950; }}
       .del {{ fill: #ff7b72; }}
-      .ascii {{ fill: #7dd3fc; font-size: 11.5px; letter-spacing: 0.5px; }}
-      .cursor {{ fill: #58a6ff; animation: blink 1s step-end infinite; }}
+      .ascii {{ fill: #bc8cff; font-size: 11.5px; letter-spacing: 0.5px; }}
+      .cursor {{ fill: #3fb950; animation: blink 1s step-end infinite; }}
+      .cursor-cmd1 {{ fill: #3fb950; animation: blink 1s step-end infinite, hide-cursor 0s forwards 1.3s; }}
       @keyframes blink {{
         50% {{ fill: transparent; }}
       }}
+      @keyframes hide-cursor {{
+        to {{ visibility: hidden; }}
+      }}
+      
+      /* Staggered Telegraph Transitions */
+      .reveal-content {{
+        opacity: 0;
+        transform: translateY(10px);
+        animation: revealUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+      }}
+      @keyframes revealUp {{
+        to {{
+          opacity: 1;
+          transform: translateY(0);
+        }}
+      }}
+      
+      #cmd1-rect {{
+        animation: type-cmd1 0.8s steps(20) 0.5s forwards;
+      }}
+      @keyframes type-cmd1 {{
+        to {{ width: 150px; }}
+      }}
+      
+      #cmd2-rect {{
+        animation: type-cmd2 1.2s steps(35) 2.0s forwards;
+      }}
+      @keyframes type-cmd2 {{
+        to {{ width: 280px; }}
+      }}
     </style>
+    
+    <clipPath id="cmd1-clip">
+      <rect id="cmd1-rect" x="75" y="70" width="0" height="20" />
+    </clipPath>
+    <clipPath id="cmd2-clip">
+      <rect id="cmd2-rect" x="75" y="500" width="0" height="20" />
+    </clipPath>
   </defs>
 
   <!-- Card Background -->
-  <rect width="820" height="485" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+  <rect width="950" height="545" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
 
   <!-- Terminal Header -->
-  <rect x="15" y="15" width="790" height="35" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1" />
+  <rect x="15" y="15" width="920" height="35" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1" />
   
   <!-- Window Controls -->
   <circle cx="35" cy="32.5" r="6" fill="#ff5f56" />
@@ -151,66 +236,71 @@ def generate_svgs():
   <circle cx="75" cy="32.5" r="6" fill="#27c93f" />
   
   <!-- Window Title -->
-  <text x="410" y="37" text-anchor="middle" class="terminal title">gokula-nandhan - zsh - 90x26</text>
+  <text x="475" y="37" text-anchor="middle" class="terminal title">gokula-nandhan - zsh - 90x26</text>
   
   <!-- Terminal Content Area -->
-  <rect x="15" y="50" width="790" height="420" rx="6" fill="#090c10" stroke="#30363d" stroke-width="1" />
+  <rect x="15" y="50" width="920" height="480" rx="6" fill="#090c10" stroke="#30363d" stroke-width="1" />
 
   <g class="terminal">
     <!-- Prompts -->
     <text x="35" y="85">
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
-      <tspan class="command">neofetch --profile</tspan>
     </text>
+    <g>
+      <text x="75" y="85" class="terminal command" clip-path="url(#cmd1-clip)">neofetch --profile</text>
+      <text x="215" y="85" class="terminal cursor-cmd1">█</text>
+    </g>
 
-    <!-- Right Side Information -->
-    <!-- Name -->
-    <text x="385" y="125" class="name">gokula nandhan</text>
-    
-    <!-- Underline -->
-    <line x1="385" y1="135" x2="775" y2="135" stroke="#30363d" stroke-width="1" />
-    
-    <!-- Profile Info -->
-    <text x="385" y="155"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
-    <text x="385" y="171"><tspan class="key">Focus</tspan>          <tspan class="value">Machine Learning / Full-stack Development</tspan></text>
-    
-    <!-- Stack -->
-    <text x="385" y="197" class="section">~/stack</text>
-    <text x="385" y="213"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
-    <text x="385" y="229"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
-    <text x="385" y="245"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
-    <text x="385" y="261"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib - Scikit-learn</tspan></text>
-    <text x="385" y="277"><tspan class="key">           </tspan>   <tspan class="value">BeautifulSoup - Selenium</tspan></text>
-    <text x="385" y="293"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
-    
-    <!-- GitHub Stats -->
-    <text x="385" y="319" class="section">~/stats</text>
-    <text x="385" y="335"><tspan class="key">Repos</tspan>           <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
-    <text x="385" y="351"><tspan class="key">Commits</tspan>         <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
-    <text x="385" y="367"><tspan class="key">Line of Codes</tspan>   <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
-    
-    <!-- Reach -->
-    <text x="385" y="393" class="section">~/reach</text>
-    <text x="385" y="409"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-    <text x="385" y="425"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    <g class="reveal-content">
+      <!-- Name -->
+      <text x="35" y="125" class="ascii-name" xml:space="preserve">{ascii_name_svg}</text>
+      
+      <!-- Underline -->
+      <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" />
+      
+      <!-- Profile Info (Left Column) -->
+      <text x="35" y="215"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+      <text x="35" y="231"><tspan class="key">Focus</tspan>          <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+      
+      <!-- Stack (Left Column) -->
+      <text x="35" y="257" class="section">~/stack</text>
+      <text x="35" y="273"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
+      <text x="35" y="289"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
+      <text x="35" y="305"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
+      <text x="35" y="321"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib</tspan></text>
+      <text x="35" y="337"><tspan class="key">           </tspan>   <tspan class="value">Scikit-learn - BeautifulSoup - Selenium</tspan></text>
+      <text x="35" y="353"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
+      
+      <!-- GitHub Stats (Left Column, below stack) -->
+      <text x="35" y="379" class="section">~/stats</text>
+      <text x="35" y="395"><tspan class="key">Repos</tspan>           <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
+      <text x="35" y="411"><tspan class="key">Commits</tspan>         <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
+      <text x="35" y="427"><tspan class="key">Line of Codes</tspan>   <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
+      
+      <!-- Reach (Left Column, below stats) -->
+      <text x="35" y="453" class="section">~/reach</text>
+      <text x="35" y="469"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+      <text x="35" y="485"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    </g>
     
     <!-- Footer / Prompt line -->
-    <text x="35" y="455">
+    <text x="35" y="515">
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
-      <tspan class="command">open for internship opportunities</tspan>
-      <tspan class="cursor">█</tspan>
     </text>
+    <g>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">open for internship opportunities<tspan class="cursor">█</tspan></text>
+    </g>
     
     <!-- Date / Time -->
-    <text x="775" y="455" text-anchor="end" class="title">last updated {date_str}</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated {date_str}</text>
   </g>
 </svg>
 """
 
     # Light Mode SVG Template
-    light_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 485" width="820" height="485">
+    light_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 545" width="950" height="545">
   <defs>
     <style>
       .terminal {{
@@ -220,29 +310,47 @@ def generate_svgs():
       }}
       .bold {{ font-weight: bold; }}
       .title {{ fill: #57606a; font-size: 13px; }}
-      .prompt {{ fill: #0969da; }}
-      .path {{ fill: #bc4c00; }}
+      .prompt {{ fill: #1a7f37; }}
+      .path {{ fill: #0969da; }}
       .command {{ fill: #24292f; }}
-      .name {{ fill: #0969da; font-size: 18px; font-weight: bold; }}
-      .key {{ fill: #bc4c00; }}
-      .section {{ fill: #8250df; font-weight: bold; }}
+      .ascii-name {{
+        fill: #0969da;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 7.8px;
+        font-weight: bold;
+        letter-spacing: 0;
+        word-spacing: 0;
+      }}
+      .key {{ fill: #0077b6; }}
+      .section {{ fill: #57606a; font-weight: bold; }}
       .value {{ fill: #24292f; }}
       .link {{ fill: #0969da; }}
       .add {{ fill: #1a7f37; }}
       .del {{ fill: #cf222e; }}
-      .ascii {{ fill: #7dd3fc; font-size: 11.5px; letter-spacing: 0.5px; }}
-      .cursor {{ fill: #0969da; animation: blink 1s step-end infinite; }}
+      .ascii {{ fill: #8250df; font-size: 11.5px; letter-spacing: 0.5px; }}
+      .cursor {{ fill: #1a7f37; animation: blink 1s step-end infinite; }}
+      .cursor-cmd1 {{ fill: #1a7f37; animation: blink 1s step-end infinite, hide-cursor 0s forwards 1.3s; }}
       @keyframes blink {{
         50% {{ fill: transparent; }}
       }}
+      @keyframes hide-cursor {{
+        to {{ visibility: hidden; }}
+      }}
     </style>
+    
+    <clipPath id="cmd1-clip">
+      <rect id="cmd1-rect" x="75" y="70" width="0" height="20" />
+    </clipPath>
+    <clipPath id="cmd2-clip">
+      <rect id="cmd2-rect" x="75" y="500" width="0" height="20" />
+    </clipPath>
   </defs>
 
   <!-- Card Background -->
-  <rect width="820" height="485" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5" />
+  <rect width="950" height="545" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5" />
 
   <!-- Terminal Header -->
-  <rect x="15" y="15" width="790" height="35" rx="6" fill="#eaeef2" stroke="#d0d7de" stroke-width="1" />
+  <rect x="15" y="15" width="920" height="35" rx="6" fill="#eaeef2" stroke="#d0d7de" stroke-width="1" />
   
   <!-- Window Controls -->
   <circle cx="35" cy="32.5" r="6" fill="#ff5f56" />
@@ -250,60 +358,65 @@ def generate_svgs():
   <circle cx="75" cy="32.5" r="6" fill="#27c93f" />
   
   <!-- Window Title -->
-  <text x="410" y="37" text-anchor="middle" class="terminal title">gokula-nandhan - zsh - 90x26</text>
+  <text x="475" y="37" text-anchor="middle" class="terminal title">gokula-nandhan - zsh - 90x26</text>
   
   <!-- Terminal Content Area -->
-  <rect x="15" y="50" width="790" height="420" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1" />
+  <rect x="15" y="50" width="920" height="480" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1" />
 
   <g class="terminal">
     <!-- Prompts -->
     <text x="35" y="85">
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
-      <tspan class="command">neofetch --profile</tspan>
     </text>
+    <g>
+      <text x="75" y="85" class="terminal command" clip-path="url(#cmd1-clip)">neofetch --profile</text>
+      <text x="215" y="85" class="terminal cursor-cmd1">█</text>
+    </g>
 
-    <!-- Right Side Information -->
-    <!-- Name -->
-    <text x="385" y="125" class="name">gokula nandhan</text>
-    
-    <!-- Underline -->
-    <line x1="385" y1="135" x2="775" y2="135" stroke="#d0d7de" stroke-width="1" />
-    
-    <!-- Profile Info -->
-    <text x="385" y="155"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
-    <text x="385" y="171"><tspan class="key">Focus</tspan>          <tspan class="value">Machine Learning / Full-stack Development</tspan></text>
-    
-    <!-- Stack -->
-    <text x="385" y="197" class="section">~/stack</text>
-    <text x="385" y="213"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
-    <text x="385" y="229"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
-    <text x="385" y="245"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
-    <text x="385" y="261"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib - Scikit-learn</tspan></text>
-    <text x="385" y="277"><tspan class="key">           </tspan>   <tspan class="value">BeautifulSoup - Selenium</tspan></text>
-    <text x="385" y="293"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
-    
-    <!-- GitHub Stats -->
-    <text x="385" y="319" class="section">~/stats</text>
-    <text x="385" y="335"><tspan class="key">Repos</tspan>           <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
-    <text x="385" y="351"><tspan class="key">Commits</tspan>         <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
-    <text x="385" y="367"><tspan class="key">Line of Codes</tspan>   <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
-    
-    <!-- Reach -->
-    <text x="385" y="393" class="section">~/reach</text>
-    <text x="385" y="409"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-    <text x="385" y="425"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    <g class="reveal-content">
+      <!-- Name -->
+      <text x="35" y="125" class="ascii-name" xml:space="preserve">{ascii_name_svg}</text>
+      
+      <!-- Underline -->
+      <line x1="35" y1="195" x2="905" y2="195" stroke="#d0d7de" stroke-width="1" />
+      
+      <!-- Profile Info (Left Column) -->
+      <text x="35" y="215"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+      <text x="35" y="231"><tspan class="key">Focus</tspan>          <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+      
+      <!-- Stack (Left Column) -->
+      <text x="35" y="257" class="section">~/stack</text>
+      <text x="35" y="273"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
+      <text x="35" y="289"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
+      <text x="35" y="305"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
+      <text x="35" y="321"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib</tspan></text>
+      <text x="35" y="337"><tspan class="key">           </tspan>   <tspan class="value">Scikit-learn - BeautifulSoup - Selenium</tspan></text>
+      <text x="35" y="353"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
+      
+      <!-- GitHub Stats (Left Column, below stack) -->
+      <text x="35" y="379" class="section">~/stats</text>
+      <text x="35" y="395"><tspan class="key">Repos</tspan>           <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
+      <text x="35" y="411"><tspan class="key">Commits</tspan>         <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
+      <text x="35" y="427"><tspan class="key">Line of Codes</tspan>   <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
+      
+      <!-- Reach (Left Column, below stats) -->
+      <text x="35" y="453" class="section">~/reach</text>
+      <text x="35" y="469"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+      <text x="35" y="485"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    </g>
     
     <!-- Footer / Prompt line -->
-    <text x="35" y="455">
+    <text x="35" y="515">
       <tspan class="prompt">➜ </tspan>
       <tspan class="path">~ </tspan>
-      <tspan class="command">open for internship opportunities</tspan>
-      <tspan class="cursor">█</tspan>
     </text>
+    <g>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">open for internship opportunities<tspan class="cursor">█</tspan></text>
+    </g>
     
     <!-- Date / Time -->
-    <text x="775" y="455" text-anchor="end" class="title">last updated {date_str}</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated {date_str}</text>
   </g>
 </svg>
 """
