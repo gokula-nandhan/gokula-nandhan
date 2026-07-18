@@ -19,7 +19,7 @@
         letter-spacing: 0;
         word-spacing: 0;
       }
-      .key { fill: #00b4d8; }
+      .key { fill: #ffbd2e; }
       .section { fill: #8b949e; font-weight: bold; }
       .value { fill: #c9d1d9; }
       .link { fill: #58a6ff; }
@@ -36,16 +36,25 @@
       }
       
       /* Staggered Telegraph Transitions */
-      .reveal-content {
-        opacity: 0;
-        transform: translateY(10px);
-        animation: revealUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
-      }
-      @keyframes revealUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .reveal-1 { opacity: 0; animation: printLine 0.01s forwards 1.3s; }
+      .reveal-2 { opacity: 0; animation: printLine 0.01s forwards 1.42s; }
+      .reveal-3 { opacity: 0; animation: printLine 0.01s forwards 1.54s; }
+      .reveal-4 { opacity: 0; animation: printLine 0.01s forwards 1.66s; }
+      .reveal-5 { opacity: 0; animation: printLine 0.01s forwards 1.78s; }
+      .reveal-6 { opacity: 0; animation: printLine 0.01s forwards 1.9s; }
+      .reveal-7 { opacity: 0; animation: printLine 0.01s forwards 2.02s; }
+      .reveal-8 { opacity: 0; animation: printLine 0.01s forwards 2.14s; }
+      .reveal-9 { opacity: 0; animation: printLine 0.01s forwards 2.26s; }
+      .reveal-10 { opacity: 0; animation: printLine 0.01s forwards 2.38s; }
+      .reveal-11 { opacity: 0; animation: printLine 0.01s forwards 2.5s; }
+      .reveal-12 { opacity: 0; animation: printLine 0.01s forwards 2.62s; }
+      .reveal-13 { opacity: 0; animation: printLine 0.01s forwards 2.74s; }
+      .reveal-14 { opacity: 0; animation: printLine 0.01s forwards 2.86s; }
+      .reveal-15 { opacity: 0; animation: printLine 0.01s forwards 2.98s; }
+      .reveal-16 { opacity: 0; animation: printLine 0.01s forwards 3.1s; }
+      
+      @keyframes printLine {
+        to { opacity: 1; }
       }
       
       #cmd1-rect {
@@ -56,7 +65,7 @@
       }
       
       #cmd2-rect {
-        animation: type-cmd2 1.2s steps(35) 2.0s forwards;
+        animation: type-cmd2 0.6s steps(35) 3.22s forwards;
       }
       @keyframes type-cmd2 {
         to { width: 280px; }
@@ -99,42 +108,39 @@
       <text x="215" y="85" class="terminal cursor-cmd1">█</text>
     </g>
 
-    <g class="reveal-content">
-      <!-- Name -->
-      <text x="35" y="125" class="ascii-name" xml:space="preserve"><tspan x="35" dy="0">               __              __                             __   __             </tspan>
-      <tspan x="35" dy="10">   ____ _____ / /____  _______/ /___ _   ____  ____ _____  __/ /_ / /_  ____ _____ </tspan>
-      <tspan x="35" dy="10">  / __ `/ __ \/ //_/ / / / / / / __ `/  / __ \/ __ `/ __ \/ __  // __ \/ __ `/ __ \</tspan>
-      <tspan x="35" dy="10"> / /_/ / /_/ / ,&lt; / /_/ / /_/ / /_/ /  / / / / /_/ / / / / /_/ // / / / /_/ / / / /</tspan>
-      <tspan x="35" dy="10"> \__, /\____/_/|_|\__,_/\__,_/\__,_/  /_/ /_/\__,_/_/ /_/\__,_//_/ /_/\__,_/_/ /_/ </tspan>
+    <!-- Name -->
+    <text x="35" y="125" class="ascii-name reveal-1" xml:space="preserve"><tspan x="35" dy="0">                __         __                               ____              </tspan>
+      <tspan x="35" dy="10">   ____ _____  / /____  __/ /___ _   ____  ____ _____  ____/ / /_  ____ _____ </tspan>
+      <tspan x="35" dy="10">  / __ `/ __ \/ //_/ / / / / __ `/  / __ \/ __ `/ __ \/ __  / __ \/ __ `/ __ \</tspan>
+      <tspan x="35" dy="10"> / /_/ / /_/ / ,&lt; / /_/ / / /_/ /  / / / / /_/ / / / / /_/ / / / / /_/ / / / /</tspan>
+      <tspan x="35" dy="10"> \__, /\____/_/|_|\__,_/_/\__,_/  /_/ /_/\__,_/_/ /_/\__,_/_/ /_/\__,_/_/ /_/ </tspan>
       <tspan x="35" dy="10">/____/</tspan></text>
-      
-      <!-- Underline -->
-      <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" />
-      
-      <!-- Profile Info (Left Column) -->
-      <text x="35" y="215"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
-      <text x="35" y="231"><tspan class="key">Focus</tspan>          <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
-      
-      <!-- Stack (Left Column) -->
-      <text x="35" y="257" class="section">~/stack</text>
-      <text x="35" y="273"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
-      <text x="35" y="289"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
-      <text x="35" y="305"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
-      <text x="35" y="321"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib</tspan></text>
-      <text x="35" y="337"><tspan class="key">           </tspan>   <tspan class="value">Scikit-learn - BeautifulSoup - Selenium</tspan></text>
-      <text x="35" y="353"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
-      
-      <!-- GitHub Stats (Left Column, below stack) -->
-      <text x="35" y="379" class="section">~/stats</text>
-      <text x="35" y="395"><tspan class="key">Repos</tspan>           <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-      <text x="35" y="411"><tspan class="key">Commits</tspan>         <tspan class="value">320</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
-      <text x="35" y="427"><tspan class="key">Line of Codes</tspan>   <tspan class="value">254,510 (</tspan><tspan class="add">267,235++</tspan><tspan class="value">, </tspan><tspan class="del">12,725--</tspan><tspan class="value">)</tspan></text>
-      
-      <!-- Reach (Left Column, below stats) -->
-      <text x="35" y="453" class="section">~/reach</text>
-      <text x="35" y="469"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-      <text x="35" y="485"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
-    </g>
+    
+    <!-- Underline -->
+    <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" class="reveal-1" />
+    
+    <!-- Profile Info (Left Column) -->
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+    
+    <!-- Stack (Left Column) -->
+    <text x="35" y="257" class="section reveal-4">~/stacks</text>
+    <text x="35" y="273" class="reveal-5"><tspan class="key">Programming Languages</tspan> <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
+    <text x="35" y="289" class="reveal-6"><tspan class="key">Frameworks</tspan>            <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
+    <text x="35" y="305" class="reveal-7"><tspan class="key">Database</tspan>              <tspan class="value">MySQL - MongoDB</tspan></text>
+    <text x="35" y="321" class="reveal-8"><tspan class="key">Machine Learning</tspan>      <tspan class="value">NumPy - Pandas - Plotly - Matplotlib - Scikit-learn - BeautifulSoup - Selenium</tspan></text>
+    <text x="35" y="337" class="reveal-9"><tspan class="key">Tools</tspan>                 <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
+    
+    <!-- GitHub Stats (Left Column, below stack) -->
+    <text x="35" y="363" class="section reveal-10">~/stats</text>
+    <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">321</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">254,535 (</tspan><tspan class="add">267,261++</tspan><tspan class="value">, </tspan><tspan class="del">12,726--</tspan><tspan class="value">)</tspan></text>
+    
+    <!-- Reach (Left Column, below stats) -->
+    <text x="35" y="437" class="section reveal-14">~/reach</text>
+    <text x="35" y="453" class="reveal-15"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+    <text x="35" y="469" class="reveal-16"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
     
     <!-- Footer / Prompt line -->
     <text x="35" y="515">
@@ -146,6 +152,6 @@
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 18 Jul 2026, 13:05 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 19 Jul 2026, 05:24 IST</text>
   </g>
 </svg>
