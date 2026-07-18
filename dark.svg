@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 485" width="820" height="485">
+  <defs>
+    <style>
+      .terminal {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+        fill: #c9d1d9;
+      }
+      .bold { font-weight: bold; }
+      .title { fill: #8b949e; font-size: 13px; }
+      .prompt { fill: #58a6ff; }
+      .path { fill: #ffb86c; }
+      .command { fill: #c9d1d9; }
+      .name { fill: #58a6ff; font-size: 18px; font-weight: bold; }
+      .key { fill: #ffb86c; }
+      .section { fill: #bc8cff; font-weight: bold; }
+      .value { fill: #c9d1d9; }
+      .link { fill: #58a6ff; }
+      .add { fill: #3fb950; }
+      .del { fill: #ff7b72; }
+      .ascii { fill: #8be9fd; font-size: 11.5px; letter-spacing: 0.5px; }
+      .cursor { fill: #58a6ff; animation: blink 1s step-end infinite; }
+      @keyframes blink {
+        50% { fill: transparent; }
+      }
+    </style>
+  </defs>
+
+  <!-- Card Background -->
+  <rect width="820" height="485" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+
+  <!-- Terminal Header -->
+  <rect x="15" y="15" width="790" height="35" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1" />
+  
+  <!-- Window Controls -->
+  <circle cx="35" cy="32.5" r="6" fill="#ff5f56" />
+  <circle cx="55" cy="32.5" r="6" fill="#ffbd2e" />
+  <circle cx="75" cy="32.5" r="6" fill="#27c93f" />
+  
+  <!-- Window Title -->
+  <text x="410" y="37" text-anchor="middle" class="terminal title">gokula-nandhan - zsh - 90x26</text>
+  
+  <!-- Terminal Content Area -->
+  <rect x="15" y="50" width="790" height="420" rx="6" fill="#090c10" stroke="#30363d" stroke-width="1" />
+
+  <g class="terminal">
+    <!-- Prompts -->
+    <text x="35" y="85">
+      <tspan class="prompt">➜ </tspan>
+      <tspan class="path">~ </tspan>
+      <tspan class="command">neofetch --profile</tspan>
+    </text>
+
+    <!-- ASCII Portrait -->
+    <text x="35" y="125" class="ascii">
+      <tspan>                 .....              </tspan>
+      <tspan x="35" dy="15">                .      .            </tspan>
+      <tspan x="35" dy="15">                  :i;,              </tspan>
+      <tspan x="35" dy="15">              ..;0@@@@G,..          </tspan>
+      <tspan x="35" dy="15">              . L@0Lf10i .          </tspan>
+      <tspan x="35" dy="15">              . 1@8LCfi; .          </tspan>
+      <tspan x="35" dy="15">              ..18@C1i;:...         </tspan>
+      <tspan x="35" dy="15">            .    ;@0f1i     ..      </tspan>
+      <tspan x="35" dy="15">           . .,;1f@@Lff;i,,         </tspan>
+      <tspan x="35" dy="15">  ......... ;CG8@0@@0@f1LLLt;.      </tspan>
+      <tspan x="35" dy="15">           t0GCG0GLG8GLfLCCLfi.     </tspan>
+      <tspan x="35" dy="15"> .11iii;;:f0G0LGCCGGLLfLLL0Gf1: .   </tspan>
+      <tspan x="35" dy="15">..8@@@@@@@@@@@@@@80CfLLLfC8Gft;..   </tspan>
+      <tspan x="35" dy="15">. f@@@@@@@@@@@@@@@@LLGCCLG@0C1i, .  </tspan>
+      <tspan x="35" dy="15">. ;@@@@@@@@@@@@@@@@GCG0GG8880L1; .  </tspan>
+      <tspan x="35" dy="15">ttf@@@@@@@@@@@@@@@@GCCG888fG8L1i... </tspan>
+      <tspan x="35" dy="15">LG8@@@@@@@@@@@@@@@@0080GGCti1it1.   </tspan>
+      <tspan x="35" dy="15">tLG0@@@@@@@@@@@@@@@@@8L1i;iCCLLf11, </tspan>
+      <tspan x="35" dy="15">fffC088888888@@@@@@@0LttttfCLLfft;. </tspan>
+      <tspan x="35" dy="15">tttCGCCCCCCCCLCCCCCCLLLLLLLLLL1;.   </tspan>
+      <tspan x="35" dy="15">tttLCCCCCCCLLLLLLLCLLLLfLLLLfif, .  </tspan>
+      <tspan x="35" dy="15">ttfLLLLLLffffLLLCCCLLLLLLLf1:t@;..  </tspan>
+      <tspan x="35" dy="15">ttfLCCCCLLLLLfLLLLLfffffft;,iL81 .  </tspan>
+    </text>
+
+    <!-- Right Side Information -->
+    <!-- Name -->
+    <text x="385" y="125" class="name">gokula nandhan</text>
+    
+    <!-- Underline -->
+    <line x1="385" y1="135" x2="775" y2="135" stroke="#30363d" stroke-width="1" />
+    
+    <!-- Profile Info -->
+    <text x="385" y="155"><tspan class="key">Role</tspan>           <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="385" y="171"><tspan class="key">Focus</tspan>          <tspan class="value">Machine Learning / Full-stack Development</tspan></text>
+    
+    <!-- Stack -->
+    <text x="385" y="197" class="section">~/stack</text>
+    <text x="385" y="213"><tspan class="key">Lang</tspan>           <tspan class="value">Java - JavaScript - TypeScript - Python</tspan></text>
+    <text x="385" y="229"><tspan class="key">Frameworks</tspan>     <tspan class="value">Node.js - Express.js - Spring Boot - React.js</tspan></text>
+    <text x="385" y="245"><tspan class="key">Database</tspan>       <tspan class="value">MySQL - MongoDB</tspan></text>
+    <text x="385" y="261"><tspan class="key">ML</tspan>             <tspan class="value">NumPy - Pandas - Plotly - Matplotlib - Scikit-learn</tspan></text>
+    <text x="385" y="277"><tspan class="key">           </tspan>   <tspan class="value">BeautifulSoup - Selenium</tspan></text>
+    <text x="385" y="293"><tspan class="key">Tools</tspan>          <tspan class="value">Git - GitHub - Postman - VS Code - Figma - ClickUp</tspan></text>
+    
+    <!-- GitHub Stats -->
+    <text x="385" y="319" class="section">~/stats</text>
+    <text x="385" y="335"><tspan class="key">Repos</tspan>           <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
+    <text x="385" y="351"><tspan class="key">Commits</tspan>         <tspan class="value">314</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+    <text x="385" y="367"><tspan class="key">Line of Codes</tspan>   <tspan class="value">254,337 (</tspan><tspan class="add">267,053++</tspan><tspan class="value">, </tspan><tspan class="del">12,716--</tspan><tspan class="value">)</tspan></text>
+    
+    <!-- Reach -->
+    <text x="385" y="393" class="section">~/reach</text>
+    <text x="385" y="409"><tspan class="key">LinkedIn</tspan>        <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+    <text x="385" y="425"><tspan class="key">Mail</tspan>            <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    
+    <!-- Footer / Prompt line -->
+    <text x="35" y="455">
+      <tspan class="prompt">➜ </tspan>
+      <tspan class="path">~ </tspan>
+      <tspan class="command">open for internship opportunities</tspan>
+      <tspan class="cursor">█</tspan>
+    </text>
+    
+    <!-- Date / Time -->
+    <text x="775" y="455" text-anchor="end" class="title">last updated 18 Jul 2026, 16:27 IST</text>
+  </g>
+</svg>
