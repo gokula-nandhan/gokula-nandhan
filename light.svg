@@ -134,8 +134,8 @@
     <!-- GitHub Stats (Left Column, below stack) -->
     <text x="35" y="363" class="section reveal-10">~/stats</text>
     <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">13 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">322</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">254,555 (</tspan><tspan class="add">267,282++</tspan><tspan class="value">, </tspan><tspan class="del">12,727--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">323</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">254,564 (</tspan><tspan class="add">267,292++</tspan><tspan class="value">, </tspan><tspan class="del">12,728--</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
     <text x="35" y="437" class="section reveal-14">~/reach</text>
@@ -152,6 +152,6 @@
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 21 Jul 2026, 14:48 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 22 Jul 2026, 01:46 IST</text>
   </g>
 </svg>
