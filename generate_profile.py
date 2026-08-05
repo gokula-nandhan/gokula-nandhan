@@ -268,7 +268,7 @@ def generate_svgs():
     <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" class="reveal-1" />
     
     <!-- Profile Info (Left Column) -->
-    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntergrator Engineering</tspan></text>
     <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
     
     <!-- Stack (Left Column) -->
@@ -451,7 +451,7 @@ def generate_svgs():
       <tspan class="path">~ </tspan>
     </text>
     <g>
-      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">open for internship opportunities<tspan class="cursor">█</tspan></text>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">Currently gaining industry experience & building cool things<tspan class="cursor">█</tspan></text>
     </g>
     
     <!-- Date / Time -->
