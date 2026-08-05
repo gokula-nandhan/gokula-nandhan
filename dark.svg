@@ -120,7 +120,7 @@
     <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" class="reveal-1" />
     
     <!-- Profile Info (Left Column) -->
-    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntergrator Engineering</tspan></text>
     <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
     
     <!-- Stack (Left Column) -->
@@ -134,8 +134,8 @@
     <!-- GitHub Stats (Left Column, below stack) -->
     <text x="35" y="363" class="section reveal-10">~/stats</text>
     <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">14 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">323</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">2,486,628 (</tspan><tspan class="add">2,610,959++</tspan><tspan class="value">, </tspan><tspan class="del">124,331--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">324</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">2</tspan></text>
+    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">2,486,637 (</tspan><tspan class="add">2,610,968++</tspan><tspan class="value">, </tspan><tspan class="del">124,331--</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
     <text x="35" y="437" class="section reveal-14">~/reach</text>
@@ -152,6 +152,6 @@
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 05 Aug 2026, 01:43 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 05 Aug 2026, 05:25 IST</text>
   </g>
 </svg>
