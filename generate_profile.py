@@ -106,25 +106,6 @@ def fetch_github_stats(username="gokula-nandhan"):
     }
 
 def generate_svgs():
-    portrait_path = "portrait.txt"
-    if not os.path.exists(portrait_path):
-        print(f"Error: {portrait_path} not found. Running photo_to_ascii.py first.")
-        import photo_to_ascii
-        photo_to_ascii.image_to_ascii("images/avatar.png", portrait_path)
-        
-    with open(portrait_path, "r", encoding="utf-8") as f:
-        ascii_lines = f.readlines()
-        
-    ascii_escaped = [xml_escape(line.rstrip('\r\n')) for line in ascii_lines]
-    
-    # Form ASCII Portrait SVG span elements (retained for backward compat, not used in template)
-    ascii_portrait_svg = ""
-    for i, line in enumerate(ascii_escaped):
-        if i == 0:
-            ascii_portrait_svg += f'<tspan>{line}</tspan>'
-        else:
-            ascii_portrait_svg += f'\n      <tspan x="35" dy="15">{line}</tspan>'
-
     # Escape and format the ASCII name "gokula nandhan"
     ascii_name_lines = [
         "                __         __                               ____              ",
@@ -218,10 +199,10 @@ def generate_svgs():
       }}
       
       #cmd2-rect {{
-        animation: type-cmd2 0.6s steps(35) 3.22s forwards;
+        animation: type-cmd2 0.8s steps(48) 3.22s forwards;
       }}
       @keyframes type-cmd2 {{
-        to {{ width: 280px; }}
+        to {{ width: 520px; }}
       }}
     </style>
     
@@ -268,7 +249,7 @@ def generate_svgs():
     <line x1="35" y1="195" x2="905" y2="195" stroke="#30363d" stroke-width="1" class="reveal-1" />
     
     <!-- Profile Info (Left Column) -->
-    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntergrator Engineering</tspan></text>
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
     <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
     
     <!-- Stack (Left Column) -->
@@ -296,7 +277,7 @@ def generate_svgs():
       <tspan class="path">~ </tspan>
     </text>
     <g>
-      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">open for internship opportunities<tspan class="cursor">█</tspan></text>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">building cool things and continuously learning<tspan class="cursor">█</tspan></text>
     </g>
     
     <!-- Date / Time -->
@@ -373,10 +354,10 @@ def generate_svgs():
       }}
       
       #cmd2-rect {{
-        animation: type-cmd2 0.6s steps(35) 3.22s forwards;
+        animation: type-cmd2 0.8s steps(48) 3.22s forwards;
       }}
       @keyframes type-cmd2 {{
-        to {{ width: 280px; }}
+        to {{ width: 520px; }}
       }}
     </style>
     
@@ -423,7 +404,7 @@ def generate_svgs():
     <line x1="35" y1="195" x2="905" y2="195" stroke="#d0d7de" stroke-width="1" class="reveal-1" />
     
     <!-- Profile Info (Left Column) -->
-    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
     <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
     
     <!-- Stack (Left Column) -->
@@ -451,7 +432,7 @@ def generate_svgs():
       <tspan class="path">~ </tspan>
     </text>
     <g>
-      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">Currently gaining industry experience & building cool things<tspan class="cursor">█</tspan></text>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">building cool things and continuously learning<tspan class="cursor">█</tspan></text>
     </g>
     
     <!-- Date / Time -->

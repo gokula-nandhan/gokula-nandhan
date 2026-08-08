@@ -65,10 +65,10 @@
       }
       
       #cmd2-rect {
-        animation: type-cmd2 0.6s steps(35) 3.22s forwards;
+        animation: type-cmd2 0.8s steps(48) 3.22s forwards;
       }
       @keyframes type-cmd2 {
-        to { width: 280px; }
+        to { width: 520px; }
       }
     </style>
     
@@ -120,7 +120,7 @@
     <line x1="35" y1="195" x2="905" y2="195" stroke="#d0d7de" stroke-width="1" class="reveal-1" />
     
     <!-- Profile Info (Left Column) -->
-    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">Software Engineering Student @ IIT (Westminster)</tspan></text>
+    <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
     <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
     
     <!-- Stack (Left Column) -->
@@ -135,7 +135,7 @@
     <text x="35" y="363" class="section reveal-10">~/stats</text>
     <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">14 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
     <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">324</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">3</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">2,486,663 (</tspan><tspan class="add">2,610,996++</tspan><tspan class="value">, </tspan><tspan class="del">124,333--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">2,486,670 (</tspan><tspan class="add">2,611,003++</tspan><tspan class="value">, </tspan><tspan class="del">124,333--</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
     <text x="35" y="437" class="section reveal-14">~/reach</text>
@@ -148,10 +148,10 @@
       <tspan class="path">~ </tspan>
     </text>
     <g>
-      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">Currently gaining industry experience & building cool things<tspan class="cursor">█</tspan></text>
+      <text x="75" y="515" class="terminal command" clip-path="url(#cmd2-clip)">building cool things and continuously learning<tspan class="cursor">█</tspan></text>
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 08 Aug 2026, 00:55 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 08 Aug 2026, 21:20 IST</text>
   </g>
 </svg>
