@@ -29,7 +29,8 @@ jobs:
 
       - name: Generate Dynamic SVGs
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: python update.py
 
       - name: Commit and Push Updated SVGs

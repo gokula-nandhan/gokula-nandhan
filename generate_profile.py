@@ -12,87 +12,133 @@ def fetch_github_stats(username="gokula-nandhan"):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
     }
     
-    # Try to load token from environment
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("ACCESS_TOKEN")
+    # 1. Resolve authentication token (GH_PAT -> GITHUB_TOKEN -> ACCESS_TOKEN -> local gh auth token)
+    token = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN") or os.environ.get("ACCESS_TOKEN")
+    if not token:
+        try:
+            import subprocess
+            token = subprocess.check_output(["gh", "auth", "token"], text=True, stderr=subprocess.DEVNULL).strip()
+        except Exception:
+            token = None
+
     if token:
         headers["Authorization"] = f"token {token}"
         print("Using GitHub token for authentication.")
 
-    # 1. User details (repos, followers)
-    repos, followers = 13, 2  # Fallbacks
-    try:
-        user_res = requests.get(f"https://api.github.com/users/{username}", headers=headers, timeout=5)
-        if user_res.status_code == 200:
-            user_data = user_res.json()
-            repos = user_data.get("public_repos", repos)
-            followers = user_data.get("followers", followers)
-    except Exception as e:
-        print("Error fetching user metadata:", e)
+    # Defaults / Fallbacks
+    repos = 15
+    stars = 1
+    followers = 3
+    contributed = 7
+    total_contributions = 122
+    commit_contributions = 17
+    restricted_contributions = 83
+    prs = 6
+    reviews = 1
+    issues = 0
+    search_commits = 325
 
-    # 2. Stars & Total Size
-    stars = 0
-    total_size_kb = 166225  # Fallback size
-    try:
-        repos_res = requests.get(f"https://api.github.com/users/{username}/repos?per_page=100", headers=headers, timeout=5)
-        if repos_res.status_code == 200:
-            repos_data = repos_res.json()
-            if isinstance(repos_data, list):
-                stars = sum(r.get("stargazers_count", 0) for r in repos_data)
-                total_size_kb = sum(r.get("size", 0) for r in repos_data)
-    except Exception as e:
-        print("Error fetching repositories details:", e)
+    # 2. Query GitHub GraphQL API (primary source for accurate contributions & repo counts)
+    gql_query = """
+    query($login: String!) {
+      user(login: $login) {
+        repositories(first: 100, ownerAffiliations: [OWNER]) {
+          totalCount
+          nodes {
+            stargazerCount
+          }
+        }
+        followers {
+          totalCount
+        }
+        repositoriesContributedTo(first: 100) {
+          totalCount
+        }
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+          }
+          totalCommitContributions
+          restrictedContributionsCount
+          totalIssueContributions
+          totalPullRequestContributions
+          totalPullRequestReviewContributions
+        }
+      }
+    }
+    """
 
-    # 3. Total Commits
-    commits = 314  # Fallback
+    graphql_success = False
+    if token:
+        try:
+            gql_res = requests.post(
+                "https://api.github.com/graphql",
+                json={"query": gql_query, "variables": {"login": username}},
+                headers=headers,
+                timeout=10
+            )
+            if gql_res.status_code == 200:
+                resp_json = gql_res.json()
+                data = resp_json.get("data", {}).get("user")
+                if data:
+                    repos = data.get("repositories", {}).get("totalCount", repos)
+                    repo_nodes = data.get("repositories", {}).get("nodes", [])
+                    stars = sum(n.get("stargazerCount", 0) for n in repo_nodes)
+                    followers = data.get("followers", {}).get("totalCount", followers)
+                    contributed = data.get("repositoriesContributedTo", {}).get("totalCount", contributed)
+
+                    cc = data.get("contributionsCollection", {})
+                    total_contributions = cc.get("contributionCalendar", {}).get("totalContributions", total_contributions)
+                    commit_contributions = cc.get("totalCommitContributions", commit_contributions)
+                    restricted_contributions = cc.get("restrictedContributionsCount", restricted_contributions)
+                    prs = cc.get("totalPullRequestContributions", prs)
+                    reviews = cc.get("totalPullRequestReviewContributions", reviews)
+                    issues = cc.get("totalIssueContributions", issues)
+                    graphql_success = True
+                    print(f"GraphQL success: {repos} repos, {stars} stars, {followers} followers, {total_contributions} contributions ({prs} PRs, {reviews} reviews).")
+        except Exception as e:
+            print("Error querying GitHub GraphQL API:", e)
+
+    # 3. Fallback to REST API if GraphQL was unsuccessful
+    if not graphql_success:
+        print("Falling back to GitHub REST API endpoints...")
+        try:
+            user_res = requests.get(f"https://api.github.com/users/{username}", headers=headers, timeout=5)
+            if user_res.status_code == 200:
+                user_data = user_res.json()
+                repos = user_data.get("public_repos", repos)
+                followers = user_data.get("followers", followers)
+        except Exception as e:
+            print("Error fetching user metadata:", e)
+
+        try:
+            repos_res = requests.get(f"https://api.github.com/users/{username}/repos?per_page=100", headers=headers, timeout=5)
+            if repos_res.status_code == 200:
+                repos_data = repos_res.json()
+                if isinstance(repos_data, list):
+                    stars = sum(r.get("stargazers_count", 0) for r in repos_data)
+        except Exception as e:
+            print("Error fetching repositories details:", e)
+
+    # 4. Search all-time public commit count across repos
     try:
         commit_headers = headers.copy()
         commit_headers["Accept"] = "application/vnd.github.cloak-preview+json"
-        commit_res = requests.get(f"https://api.github.com/search/commits?q=author:{username}", headers=commit_headers, timeout=5)
+        commit_res = requests.get(f"https://api.github.com/search/commits?q=author:{username}", headers=commit_headers, timeout=6)
         if commit_res.status_code == 200:
             commit_data = commit_res.json()
-            commits = commit_data.get("total_count", commits)
+            search_commits = commit_data.get("total_count", search_commits)
     except Exception as e:
         print("Error searching commits count:", e)
 
-    # 4. Contributed Repositories
-    contributed = 3  # Fallback
-    try:
-        pr_res = requests.get(f"https://api.github.com/search/issues?q=type:pr+author:{username}", headers=headers, timeout=5)
-        if pr_res.status_code == 200:
-            pr_data = pr_res.json()
-            items = pr_data.get("items", [])
-            unique_repos = set()
-            for item in items:
-                repo_url = item.get("repository_url", "")
-                if repo_url:
-                    repo_name = repo_url.split("/repos/")[-1]
-                    if not repo_name.startswith(username + "/"):
-                        unique_repos.add(repo_name)
-            contributed = max(len(unique_repos), contributed)
-    except Exception as e:
-        print("Error fetching contributed repositories count:", e)
+    # Total all-time commits combine public search commits with restricted/private commits
+    commits = max(search_commits + restricted_contributions, commit_contributions + restricted_contributions, 325)
+    commits_year = commit_contributions + restricted_contributions
 
-    # 5. Lines of Code (LOC)
-    loc = 0
-    # Try Codetabs with a short timeout
-    try:
-        print("Attempting to query Codetabs LOC API...")
-        loc_res = requests.get(f"https://api.codetabs.com/v1/loc?github={username}", headers={"User-Agent": "Mozilla/5.0"}, timeout=6)
-        if loc_res.status_code == 200:
-            loc_data = loc_res.json()
-            for lang in loc_data:
-                if lang.get("language") != "Total":
-                    loc += lang.get("lines", 0)
-            print("Successfully retrieved LOC from Codetabs.")
-    except Exception as e:
-        print("Codetabs API failed or timed out. Falling back to estimation.")
-
-    # Fallback to realistic estimation based on repository size
-    if loc == 0:
-        loc = int(total_size_kb * 1.5) + 5000
-        
-    additions = int(loc * 1.05)
-    deletions = int(loc * 0.05)
+    # Format human-friendly contribution labels
+    pr_label = f"{prs} PRs" if prs != 1 else "1 PR"
+    review_label = f"{reviews} Reviews" if reviews != 1 else "1 Review"
+    commit_year_label = f"{commits_year} Commits" if commits_year != 1 else "1 Commit"
 
     return {
         "repos": repos,
@@ -100,9 +146,13 @@ def fetch_github_stats(username="gokula-nandhan"):
         "stars": stars,
         "commits": commits,
         "contributed": contributed,
-        "loc": loc,
-        "additions": additions,
-        "deletions": deletions
+        "contributions": total_contributions,
+        "commits_year": commits_year,
+        "prs": prs,
+        "reviews": reviews,
+        "pr_label": pr_label,
+        "review_label": review_label,
+        "commit_year_label": commit_year_label
     }
 
 def generate_svgs():
@@ -250,7 +300,7 @@ def generate_svgs():
     
     <!-- Profile Info (Left Column) -->
     <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
-    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">AI Engineering</tspan></text>
     
     <!-- Stack (Left Column) -->
     <text x="35" y="257" class="section reveal-4">~/stacks</text>
@@ -263,13 +313,12 @@ def generate_svgs():
     <!-- GitHub Stats (Left Column, below stack) -->
     <text x="35" y="363" class="section reveal-10">~/stats</text>
     <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
-    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Contributions</tspan>         <tspan class="value">{stats['contributions']:,} (</tspan><tspan class="add">{stats['commit_year_label']}</tspan><tspan class="value">, </tspan><tspan class="link">{stats['pr_label']}</tspan><tspan class="value">, </tspan><tspan class="del">{stats['review_label']}</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
-    <text x="35" y="437" class="section reveal-14">~/reach</text>
-    <text x="35" y="453" class="reveal-15"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-    <text x="35" y="469" class="reveal-16"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    <text x="35" y="421" class="section reveal-13">~/reach</text>
+    <text x="35" y="437" class="reveal-14"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+    <text x="35" y="453" class="reveal-15"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
     
     <!-- Footer / Prompt line -->
     <text x="35" y="515">
@@ -405,7 +454,7 @@ def generate_svgs():
     
     <!-- Profile Info (Left Column) -->
     <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
-    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">AI Engineering</tspan></text>
     
     <!-- Stack (Left Column) -->
     <text x="35" y="257" class="section reveal-4">~/stacks</text>
@@ -418,13 +467,12 @@ def generate_svgs():
     <!-- GitHub Stats (Left Column, below stack) -->
     <text x="35" y="363" class="section reveal-10">~/stats</text>
     <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">{stats['repos']} (Contributed: {stats['contributed']})</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">{stats['stars']}</tspan></text>
-    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">{stats['commits']}</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">{stats['followers']}</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">{stats['loc']:,} (</tspan><tspan class="add">{stats['additions']:,}++</tspan><tspan class="value">, </tspan><tspan class="del">{stats['deletions']:,}--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Contributions</tspan>         <tspan class="value">{stats['contributions']:,} (</tspan><tspan class="add">{stats['commit_year_label']}</tspan><tspan class="value">, </tspan><tspan class="link">{stats['pr_label']}</tspan><tspan class="value">, </tspan><tspan class="del">{stats['review_label']}</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
-    <text x="35" y="437" class="section reveal-14">~/reach</text>
-    <text x="35" y="453" class="reveal-15"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-    <text x="35" y="469" class="reveal-16"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    <text x="35" y="421" class="section reveal-13">~/reach</text>
+    <text x="35" y="437" class="reveal-14"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+    <text x="35" y="453" class="reveal-15"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
     
     <!-- Footer / Prompt line -->
     <text x="35" y="515">

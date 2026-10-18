@@ -121,7 +121,7 @@
     
     <!-- Profile Info (Left Column) -->
     <text x="35" y="215" class="reveal-2"><tspan class="key">Role</tspan>                  <tspan class="value">AI Full-Stack Developer Intern @AIntegrator</tspan></text>
-    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">Machine Learning / Full-stack Development</tspan></text>
+    <text x="35" y="231" class="reveal-3"><tspan class="key">Focus</tspan>                 <tspan class="link">AI Engineering</tspan></text>
     
     <!-- Stack (Left Column) -->
     <text x="35" y="257" class="section reveal-4">~/stacks</text>
@@ -133,14 +133,13 @@
     
     <!-- GitHub Stats (Left Column, below stack) -->
     <text x="35" y="363" class="section reveal-10">~/stats</text>
-    <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">14 (Contributed: 3)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
-    <text x="35" y="395" class="reveal-12"><tspan class="key">Commits</tspan>               <tspan class="value">325</tspan> | <tspan class="key">Followers</tspan> <tspan class="value">3</tspan></text>
-    <text x="35" y="411" class="reveal-13"><tspan class="key">Line of Codes</tspan>         <tspan class="value">2,486,574 (</tspan><tspan class="add">2,610,902++</tspan><tspan class="value">, </tspan><tspan class="del">124,328--</tspan><tspan class="value">)</tspan></text>
+    <text x="35" y="379" class="reveal-11"><tspan class="key">Repos</tspan>                 <tspan class="value">15 (Contributed: 7)</tspan> | <tspan class="key">Stars</tspan> <tspan class="value">1</tspan></text>
+    <text x="35" y="395" class="reveal-12"><tspan class="key">Contributions</tspan>         <tspan class="value">122 (</tspan><tspan class="add">100 Commits</tspan><tspan class="value">, </tspan><tspan class="link">6 PRs</tspan><tspan class="value">, </tspan><tspan class="del">1 Review</tspan><tspan class="value">)</tspan></text>
     
     <!-- Reach (Left Column, below stats) -->
-    <text x="35" y="437" class="section reveal-14">~/reach</text>
-    <text x="35" y="453" class="reveal-15"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
-    <text x="35" y="469" class="reveal-16"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
+    <text x="35" y="421" class="section reveal-13">~/reach</text>
+    <text x="35" y="437" class="reveal-14"><tspan class="key">LinkedIn</tspan>              <tspan class="link">linkedin.com/in/gokula-nandhan</tspan></text>
+    <text x="35" y="453" class="reveal-15"><tspan class="key">Mail</tspan>                  <tspan class="link">gokula.nandhan02@gmail.com</tspan></text>
     
     <!-- Footer / Prompt line -->
     <text x="35" y="515">
@@ -152,6 +151,6 @@
     </g>
     
     <!-- Date / Time -->
-    <text x="905" y="515" text-anchor="end" class="title">last updated 18 Oct 2026, 02:10 IST</text>
+    <text x="905" y="515" text-anchor="end" class="title">last updated 18 Oct 2026, 23:36 IST</text>
   </g>
 </svg>
